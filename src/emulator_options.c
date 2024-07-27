@@ -17,6 +17,7 @@
 #pragma GCC diagnostic pop
 
 #include "ini.h"
+#include "log.h"
 #include "utlist.h"
 #include "utstring.h"
 #include "version.h"
@@ -121,8 +122,10 @@ struct emuOpts emuOptions[] = {
 #endif //QLAY_EMU
 
 #ifdef Q68_EMU
+{"loglevel", "", "log level 0-5 (5 silent)", EMU_OPT_INT, LOG_ERROR, NULL, NULL},
 {"smsqe", "", "smsqe image to load (at 0x32000)", EMU_OPT_CHAR, 0, NULL, NULL},
 {"sd1", "", "SDHC Image for SD1 slot", EMU_OPT_CHAR, 0, NULL, NULL},
+{"sd2", "", "SDHC Image for SD2 slot", EMU_OPT_CHAR, 0, NULL, NULL},
 {"sysrom", "r", "system rom to load (at 0x0)", EMU_OPT_CHAR, 0, NULL, NULL},
 {"trace", "", "enable tracing", EMU_OPT_INT, 0, NULL, NULL},
 

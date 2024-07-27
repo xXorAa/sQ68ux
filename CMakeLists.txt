@@ -25,6 +25,7 @@ include_directories(
   args/src/
   inih/
   log.c/src/
+  mame/
   external/
   qlay/
   uthash/src/
@@ -41,6 +42,9 @@ add_custom_target(
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/version.c
                             PROPERTIES GENERATED TRUE)
 
+cmake_path(NORMAL_PATH PROJECT_SOURCE_DIR OUTPUT_VARIABLE PROJECT_ROOT_NORMALIZED)
+add_compile_options(-ffile-prefix-map=${PROJECT_ROOT_NORMALIZED}=./)
+
 add_executable(
   sq68ux
   src/emulator_events.c
@@ -53,11 +57,12 @@ add_executable(
   src/q68_keyboard.c
   src/q68_mainloop.c
   src/q68_memory.c
-  src/q68_sd.c
   external/sdl-ps2.c
   args/src/args.c
   inih/ini.c
   log.c/src/log.c
+  mame/spi_sdcard.c
+  mame/crc16spi_fujitsu.c
   Musashi/m68kcpu.c
   Musashi/m68kops.c
   Musashi/m68kdasm.c

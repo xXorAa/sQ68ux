@@ -13,10 +13,12 @@
 #include "emulator_memory.h"
 #include "emulator_options.h"
 #include "emulator_screen.h"
+#include "log.h"
 #include "m68k.h"
 #include "q68_hooks.h"
 #include "q68_keyboard.h"
 #include "q68_sd.h"
+#include "spi_sdcard.h"
 #include "utarray.h"
 
 uint32_t msClk = 0;
@@ -28,6 +30,8 @@ void emulatorMainLoop(void)
 	const char *sysrom = emulatorOptionString("sysrom");
 
 	uint32_t initPc = 0;
+
+	log_set_level(emulatorOptionInt("loglevel"));
 
 	if (strlen(smsqe) > 0) {
 		emulatorLoadFile(smsqe, &emulatorMemorySpace()[Q68_SMSQE_ADDR], 0);
@@ -42,7 +46,7 @@ void emulatorMainLoop(void)
 	}
 
 	q68InitKeyb();
-	q68InitSD();
+	card_initialise(emulatorOptionString("sd1"), emulatorOptionString("sd2"));
 
 	m68k_set_cpu_type(M68K_CPU_TYPE_68000);
 	m68k_init();
